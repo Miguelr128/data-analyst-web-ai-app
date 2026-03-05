@@ -1,0 +1,59 @@
+{
+  "narrative_summary": "The analysis identifies Oneil Cruz as the leader in average bat speed at 78.79 mph, followed closely by Junior Caminero at 78.54 mph. A clear correlation exists between elite bat speed and 'Hard Swing Rate,' with Caminero reaching a peak of 81.1%. However, the data reveals a high-variance performance profile among these power hitters; while bat speed is exceptional, players like Oneil Cruz and Jordan Walker exhibit significant negative 'Batter Run Values' (-21.06 and -19.14 respectively), often paired with higher 'Whiff per Swing' rates (32.3%). This suggests that while bat speed provides the raw physical ceiling for production, it must be balanced with contact quality to translate into positive run value.",
+  "structured_data": [
+    {
+      "label": "Cruz, Oneil",
+      "value": 78.79,
+      "group": "Top 10 Bat Speed"
+    },
+    {
+      "label": "Caminero, Junior",
+      "value": 78.54,
+      "group": "Top 10 Bat Speed"
+    },
+    {
+      "label": "Walker, Jordan",
+      "value": 78.07,
+      "group": "Top 10 Bat Speed"
+    },
+    {
+      "label": "Adell, Jo",
+      "value": 77.61,
+      "group": "Top 10 Bat Speed"
+    },
+    {
+      "label": "Schwarber, Kyle",
+      "value": 77.32,
+      "group": "Top 10 Bat Speed"
+    },
+    {
+      "label": "League Avg (Top Decile)",
+      "value": 75.8,
+      "group": "Comparison"
+    },
+    {
+      "label": "League Median",
+      "value": 72.15,
+      "group": "Comparison"
+    }
+  ],
+  "python_code": "import pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Load dataset (assuming data is in a csv named 'swing_data.csv')\ndf = pd.read_csv('swing_data.csv')\n\n# Filter and sort for Top 10 by average bat speed\ntop_10_speed = df.sort_values(by='avg_bat_speed', ascending=False).head(10)\n\n# Set visualization style\nsns.set_theme(style='whitegrid')\nplt.figure(figsize=(10, 6))\n\n# Create Barplot\nplot = sns.barplot(data=top_10_speed, x='avg_bat_speed', y='name', palette='magma')\nplt.title('Top 10 MLB Players by Average Bat Speed', fontsize=15)\nplt.xlabel('Average Bat Speed (mph)', fontsize=12)\nplt.ylabel('Player Name', fontsize=12)\nplt.xlim(70, 80)\n\n# Adding annotations\nfor i, v in enumerate(top_10_speed['avg_bat_speed']):\n    plot.text(v + 0.1, i, f'{v:.2f}', color='black', va='center')\n\nplt.tight_layout()\nplt.show()",
+  "notebook_cells": [
+    {
+      "type": "markdown",
+      "content": "# Analysis of Elite Bat Speed Leaders\nThis notebook explores the relationship between high-velocity swings and overall hitting efficiency using the latest Statcast swing metrics."
+    },
+    {
+      "type": "code",
+      "content": "import pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Initialize Data\ndata = [\n    {'name': 'Cruz, Oneil', 'avg_bat_speed': 78.79, 'hard_swing_rate': 0.78, 'batter_run_value': -21.06},\n    {'name': 'Caminero, Junior', 'avg_bat_speed': 78.54, 'hard_swing_rate': 0.81, 'batter_run_value': 2.37},\n    {'name': 'Walker, Jordan', 'avg_bat_speed': 78.07, 'hard_swing_rate': 0.77, 'batter_run_value': -19.14},\n    {'name': 'Adell, Jo', 'avg_bat_speed': 77.61, 'hard_swing_rate': 0.73, 'batter_run_value': 0.66},\n    {'name': 'Schwarber, Kyle', 'avg_bat_speed': 77.32, 'hard_swing_rate': 0.77, 'batter_run_value': 11.19}\n]\ndf = pd.DataFrame(data)\n\n# Sorting for analysis\ndf_sorted = df.sort_values('avg_bat_speed', ascending=False)\ndf_sorted"
+    },
+    {
+      "type": "markdown",
+      "content": "## Visualization: Bat Speed vs. Run Value\nWhile high speed is desirable, we evaluate if it translates directly to run production."
+    },
+    {
+      "type": "code",
+      "content": "plt.figure(figsize=(10, 5))\nsns.scatterplot(data=df, x='avg_bat_speed', y='batter_run_value', size='hard_swing_rate', hue='name', sizes=(100, 400))\nplt.title('Bat Speed vs. Batter Run Value')\nplt.legend(bbox_to_anchor=(1.05, 1), loc=2)\nplt.show()"
+    }
+  ]
+}
